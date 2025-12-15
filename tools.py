@@ -1,4 +1,3 @@
-# tools.py
 from pydantic import BaseModel, Field
 from typing import List
 import datetime
@@ -71,3 +70,5 @@ def send_email(recipient: str, report: str) -> str:
     Mock email sender.
     """
     return f"Email successfully sent to {recipient}."
+
+
