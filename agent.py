@@ -1,7 +1,7 @@
 from openai import OpenAI
 from pydantic import BaseModel
 from typing import Dict, Callable, List
-import jso
+import json
 
 from tools import (
     search_knowledge_base,
