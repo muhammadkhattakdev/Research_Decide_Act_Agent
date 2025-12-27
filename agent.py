@@ -45,4 +45,35 @@ class Agent:
             message = response.choices[0].message
 
             
+            if message.tool_calls is None:
+                return message.content
+            
+            messages.append(message)
+            
+            for tool_call in message.tool_calls:
+                tool_name = tool_call.function.name
+                tool_args = json.loads(tool_call.function.arguments)
+
+                result = self.tools[tool_name](**tool_args)
+
+                messages.append({
+                    'role': "tool",
+                    'tool_call_id': tool_call.id,
+                    'name': tool_name,
+                    'content': result,
+                })
+
+        return "Agent stopped(too many steps)."
+    
+    def _tool_schemas(self) -> str:
+
+        """Explicit tool schemas (LLM Contract)"""
+        
+        schema = [
+            {
+                'type': 'function'
+            }
+        ]
+
+
 
